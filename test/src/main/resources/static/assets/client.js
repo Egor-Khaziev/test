@@ -10,7 +10,7 @@ function openWebSocket(token) {
   $("#loginCon").hide(); 
   curCon = $("#initCon");
   curCon.show();
-  ws = new WebSocket("ws://localhost:8080/websocket"); //?token=" + token);
+  ws =  new WebSocket("ws://localhost:8080/websocket"); //?token=" + token);
   ws.onopen = function() {
     console.log('Web socket opened');
   }
@@ -167,16 +167,17 @@ function onSignIn() {
   var username = $("#username").val();
   var pass = $("#password").val();
   if (username && pass) {
+    // openWebSocket("тест")
       $.ajax({
             type: 'post',
-            url: '/login',
+            url: 'http://localhost:8080/login',
             data: JSON.stringify({"username": username, "password": pass}),
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: function (data) {
                 openWebSocket(data.token);
             },
-            
+
         }).fail(function(response) {
            alert(response.responseJSON.errorMessage);
         });

@@ -1,5 +1,6 @@
 package com.ekhaziev.alfasoft.task.services;
 
+import com.ekhaziev.alfasoft.task.entity.Request;
 import com.ekhaziev.alfasoft.task.entity.User;
 import com.ekhaziev.alfasoft.task.exceptions.UserNotFoundException;
 import com.ekhaziev.alfasoft.task.repositories.UserList;
@@ -16,13 +17,14 @@ import java.util.UUID;
 public class GameService {
     private final UserList userList;
 
-    public String tryToLogIn(User user){
+    public Request tryToLogIn(User user){
         if (verify(user)){
             String UUID = generateUserUuid();
             log.warn("UUID created");
             Map<String,User> authorizedList =  userList.getAuthorizedList();
             authorizedList.put(UUID,user);
-            return UUID;
+
+            return new Request(UUID);
         }
         throw new UserNotFoundException("user or password incorrect") ;
     }
