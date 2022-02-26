@@ -1,32 +1,29 @@
 package com.ekhaziev.alfasoft.task.controllers;
 
-
-import com.ekhaziev.alfasoft.task.entity.User;
-import com.ekhaziev.alfasoft.task.services.GameService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import com.ekhaziev.alfasoft.task.entity.Greeting;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
-@Slf4j
-@RequiredArgsConstructor
 public class GameController {
 
-    private final GameService gameService;
 
-    @MessageMapping("/login")
-    @PostMapping("/login")
-    @SendTo("/test")
-    public String verify(@RequestBody  @NotNull User user) throws Exception {
-        log.warn(user.getUsername());
-        log.warn(user.getPassword());
-        return gameService.tryToLogIn(user);
+
+//    @MessageMapping("/hello")
+//    @SendTo("/topic/greetings")
+//    public Greeting base(HelloMessage message) throws Exception {
+//        //Thread.sleep(1000); // simulated delay
+//        System.out.println("базовый контроллер");
+//        return new Greeting("Hello, !");
+//    }
+
+    @MessageMapping("/websocket")
+    @SendTo("/game/second")
+    public Greeting greeting(@RequestHeader String token) throws Exception {
+        System.out.println("websocket");
+        return new Greeting("???????????");
     }
 
 }

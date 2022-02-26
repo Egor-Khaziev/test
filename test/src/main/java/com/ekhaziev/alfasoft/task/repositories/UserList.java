@@ -17,9 +17,6 @@ public class UserList {
     private Map<String,User> AuthorizedList;
     private List<User> list;
 
-
-
-
     @PostConstruct
     public void init(){
         AuthorizedList = new HashMap<>();
